@@ -82,6 +82,7 @@
     "coverageDirectory": "../coverage",
     "testEnvironment": "node",
     "coverageReporters": [
+      "text",
       "text-lcov"
     ]
   }
