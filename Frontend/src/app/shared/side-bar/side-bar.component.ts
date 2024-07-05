@@ -36,6 +36,11 @@ export class SideBarComponent implements OnInit {
   async loadUpNextData() {
     try {
       this.upNextCardData = await this.spotifyService.getQueue(this.provider);
+      var temp = document.getElementById('suggestionsLoadingClass');
+      if(temp)
+      {
+        temp.style.display = 'none';
+      }
     } catch (error) {
       console.error('Error loading up next data:', error);
     }
