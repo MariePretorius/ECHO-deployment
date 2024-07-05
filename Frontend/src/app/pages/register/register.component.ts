@@ -45,10 +45,23 @@ export class RegisterComponent {
     }
 
     async register() {
+
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};:'"\\|,.<>/?`~]).{6,}$/;
       if (this.username === '' || this.email === '' || this.password === '') {
         alert('Please fill in all fields');
         return;
       }
+
+      if (passwordRegex.test(this.password)) {
+        console.log('Password Valid');
+      }
+      else 
+      {
+        console.log('Password Invalid');
+        alert("Password must fulfill the following requirements:\n-At least 6 characters long\n-Contains at least one lowercase letter\n-Contains at least one uppercase letter\n-Contains at least one digit\n-Contains at least one special character from the set !@#$%^&*()_+-=[]{};'\:\"|<>?,./~`");
+        return;
+      }
+      
 
       const metadata = {
         username: this.username,
@@ -57,7 +70,9 @@ export class RegisterComponent {
 
       this.authService.signUp(this.email, this.password, metadata).subscribe(
         () => this.router.navigate(["/home"]),
-        (error) => console.error("Error signing up:", error)
+        (error) => {
+          console.error("Error signing up:", error)
+        }
       );
     }
 
