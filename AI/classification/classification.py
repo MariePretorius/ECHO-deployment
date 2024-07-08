@@ -27,21 +27,35 @@ def load_classifier():
 
 def process_lyrics(text):
     text = text.replace('\\', '\n')
-    text = re.sub(r'\[.*?\]', '\n', text)
+    text = text.replace('[Chorus]', '\n')
+    text = text.replace('[Pre-Chorus]', '\n')
+    text = re.sub(r'\[Verse.*?\]', '\n', text)
 
     lines = []
     current_line = []
 
-    words = text.split()
-    for word in words:
-        if word and word[0].isupper() and current_line:
-            lines.append(' '.join(current_line))
-            current_line = [word]
-        else:
-            current_line.append(word)
+    i = 0
+    while i < len(text):
+        while i < len(text) and text[i].isspace():
+            i += 1
+
+        word_start = i
+        while i < len(text) and not text[i].isspace():
+            current_line.append(text[i])
+            i += 1
+
+        if len(current_line) > 1:
+            for j in range(1, len(current_line)):
+                if current_line[j].isupper():
+                    current_line.insert(j, ' ')
+                    break
+
+        if current_line:
+            lines.append(''.join(current_line))
+            current_line = []
 
     if current_line:
-        lines.append(' '.join(current_line))
+        lines.append(''.join(current_line))
 
     processed_text = ' '.join(lines)
     return processed_text
