@@ -25,6 +25,19 @@ def load_classifier():
     return classifier
 
 
+def split_lyrics(text):
+    verse_sections = re.split(r'\[\s*Verse\s*\d*\s*\]', text)
+    pre_chorus_sections = re.split(r'\[\s*Pre-Chorus\s*\]', ' '.join(verse_sections))
+    chorus_sections = re.split(r'\[\s*Chorus\s*\]', ' '.join(pre_chorus_sections))
+
+    all_sections = []
+    for section in chorus_sections:
+        if section.strip():
+            all_sections.append(section.strip())
+
+    return all_sections
+
+
 def process_lyrics(text):
     text = text.replace('\\', '\n')
     text = text.replace('[Chorus]', '\n')
