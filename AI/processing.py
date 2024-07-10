@@ -1,10 +1,12 @@
+import os
+
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 
-import cluster
+from clustering import cluster
 
-client_id = os.getenv('SPOTIFY_CLIENT_ID')
-client_secret = os.getenv('SPOTIFY_CLIENT_SECRET')
+client_id = os.environ.get("SPOTIFY_CLIENT_ID")
+client_secret = os.environ.get("SPOTIFY_CLIENT_SECRET")
 
 credentials = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
 sp = spotipy.Spotify(client_credentials_manager=credentials)
@@ -37,7 +39,7 @@ def get_track_details(uri):
     return track_name, artist_name
 
 
-def get_similar_songs(song_name, artist):
+def get_cluster_songs(song_name, artist):
     track_name = song_name
     artist_name = artist
 
@@ -56,3 +58,15 @@ def get_similar_songs(song_name, artist):
         print(f"{track_name} - {artist_name}")
 
     return recommended_tracks
+
+
+def get_cluster(song_name, artist):
+    track_name = song_name
+    artist_name = artist
+
+    track_id = get_track_id(track_name, artist_name)
+    song_features = get_song_features(track_id)
+
+    cluster_number = cluster.get_cluster_number(song_features)
+
+    return cluster_number

@@ -177,6 +177,3 @@ def run_lyric_analysis(song_name, artist):
         return second_highest_label
     else:
         return overall_highest_label
-
-
-run_lyric_analysis("Radio", "Lana Del Rey")

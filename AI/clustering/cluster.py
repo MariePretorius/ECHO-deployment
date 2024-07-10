@@ -128,9 +128,3 @@ def recommend_songs(music_features, n_recommendations=5):
         return closest_songs['uri']
     else:
         return None
-
-
-# clustered_data, centroids = load_cluster_data()
-#
-# if clustered_data is not None and centroids is not None:
-#     visualise_clusters(clustered_data, centroids, X_scaled)
