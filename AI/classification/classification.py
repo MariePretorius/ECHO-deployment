@@ -8,9 +8,6 @@ CLIENT_ID = os.environ.get('DEEZER_CLIENT_ID')
 CLIENT_SECRET = os.environ.get('DEEZER_CLIENT_SECRET')
 ACCESS_TOKEN = os.environ.get('DEEZER_ACCESS_TOKEN')
 
-classifier_path = 'classifier_model'
-
-
 def save_classifier(classifier, path):
     classifier.model.save_pretrained(path)
     classifier.tokenizer.save_pretrained(path)
@@ -25,24 +22,8 @@ def load_classifier():
     return classifier
 
 
-def split_lyrics(text):
-    verse_sections = re.split(r'\[\s*Verse\s*\d*\s*\]', text)
-    pre_chorus_sections = re.split(r'\[\s*Pre-Chorus\s*\]', ' '.join(verse_sections))
-    chorus_sections = re.split(r'\[\s*Chorus\s*\]', ' '.join(pre_chorus_sections))
-
-    all_sections = []
-    for section in chorus_sections:
-        if section.strip():
-            all_sections.append(section.strip())
-
-    return all_sections
-
-
 def process_lyrics(text):
     text = text.replace('\\', '\n')
-    text = text.replace('[Chorus]', '\n')
-    text = text.replace('[Pre-Chorus]', '\n')
-    text = re.sub(r'\[Verse.*?\]', '\n', text)
 
     lines = []
     current_line = []
@@ -71,7 +52,23 @@ def process_lyrics(text):
         lines.append(''.join(current_line))
 
     processed_text = ' '.join(lines)
+
     return processed_text
+
+
+def split_lyrics(text):
+    sections = re.split(r'\s*(\[.*?\])\s*', text)
+
+    all_sections = []
+    for section in sections:
+        if section.strip() and not re.match(r'\s*(\[.*?\])\s*', section):
+            all_sections.append(section.strip())
+
+    # for section in sections:
+    #     print(section)
+    #     print()
+
+    return all_sections
 
 
 def get_highest_score_label(model_outputs):
@@ -111,7 +108,6 @@ def get_lyrics(song_name, artist_name):
     print("Song URL: ", song_url)
 
     response = requests.get(song_url, headers=headers)
-    # print("Response: ", response.text)
 
     if response.status_code != 200:
         print(f"Failed to retrieve lyrics. Status code: {response.status_code}")
@@ -129,22 +125,58 @@ def get_lyrics(song_name, artist_name):
     return lyrics_list
 
 
+def remove_brackets(text):
+    pattern = r'\[.*?\]'
+    cleaned_text = re.sub(pattern, '', text)
+    return cleaned_text
+
+
 def run_lyric_analysis(song_name, artist):
     classifier = load_classifier()
 
     lyrics = get_lyrics(song_name, artist)
 
+    new_lyrics = []
     for lyric in lyrics:
-        lyric = process_lyrics(lyric)
-        print(lyric)
-        print()
+        processed = process_lyrics(lyric)
+        new_lyrics.append(processed)
 
-    # model_outputs = classifier(lyrics)
-    # scores = model_outputs[0]
-    # print(scores)
-    # label = get_highest_score_label(scores)
-    # print("Emotion: " + label)
-    # return label
+    cleaned_lyrics = []
+    for lyric in new_lyrics:
+        processed = split_lyrics(lyric)
+        for cleaned_lyric in processed:
+            cleaned_lyrics.append(cleaned_lyric)
+
+    # for cleaned_lyric in cleaned_lyrics:
+    #     print(cleaned_lyric)
+    #     print()
+
+    label_scores = {}
+
+    for cleaned_lyric in cleaned_lyrics:
+        model_outputs = classifier(cleaned_lyric)
+        scores = model_outputs[0]
+
+        for output in scores:
+            label = output['label']
+            score = output['score']
+            if label not in label_scores:
+                label_scores[label] = 0
+            label_scores[label] += score
+
+        highest_score_label = get_highest_score_label(scores)
+        print("Emotion: " + highest_score_label)
+
+    overall_highest_label = max(label_scores, key=label_scores.get)
+    print("Overall Emotion: " + overall_highest_label)
+
+    if overall_highest_label == "neutral":
+        label_scores.pop("neutral")
+        second_highest_label = max(label_scores, key=label_scores.get)
+        print("Secondary Emotion: " + second_highest_label)
+        return second_highest_label
+    else:
+        return overall_highest_label
 
 
-run_lyric_analysis("Style", "Taylor Swift")
+run_lyric_analysis("Radio", "Lana Del Rey")
