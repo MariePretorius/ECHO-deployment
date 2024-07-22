@@ -26,12 +26,12 @@ def process_song(song_name, artist):
 
         if song_row:
             print("Song found in CSV")
-            track_id = song_row['Track ID'].values[0]
-            song_features = eval(song_row['Song Features'].values[0])
-            cluster_number = song_row['Cluster Number'].values[0]
-            emotion = song_row['Emotion'].values[0]
-            predicted_genre = song_row['Predicted Genre'].values[0]
-            album_genre = song_row['Album Genre'].values[0]
+            track_id = song_row['Track ID']
+            song_features = eval(song_row['Song Features'])
+            cluster_number = song_row['Cluster Number']
+            emotion = song_row['Emotion']
+            predicted_genre = song_row['Predicted Genre']
+            album_genre = song_row['Album Genre']
         else:
             print("Song not found in CSV")
             track_id = processing.get_track_id(track_name, artist_name)
@@ -49,14 +49,71 @@ def process_song(song_name, artist):
         print("Predicted Genre: ", predicted_genre)
         print("Album Genre: ", album_genre)
 
+        process_similar_songs(cluster_songs, emotion, predicted_genre, album_genre)
 
-# def process_similar_songs(songs):
-#     for song in songs:
-#         if os.path.exists(CSV_FILE_PATH):
-#             with open(CSV_FILE_PATH, mode='r', newline='') as csvfile:
-#                 reader = csv.DictReader(csvfile)
-#                 data = list(reader)
 
+def process_similar_songs(songs, song_emotion, song_predicted_genre, song_album_genre):
+    similar_songs = []
+    for song in songs:
+        if os.path.exists(CSV_FILE_PATH):
+            with open(CSV_FILE_PATH, mode='r', newline='') as csvfile:
+                reader = csv.DictReader(csvfile)
+                data = list(reader)
+
+            song_name, artist_name = processing.get_track_details(song)
+            song_row = next((row for row in data if row['Song Name'] == song_name and row['Artist'] == artist_name), None)
+
+            if song_row:
+                print("Song found in CSV")
+                track_id = song_row['Track ID']
+                song_features = eval(song_row['Song Features'])
+                cluster_number = song_row['Cluster Number']
+                emotion = song_row['Emotion']
+                predicted_genre = song_row['Predicted Genre']
+                album_genre = song_row['Album Genre']
+            else:
+                print("Song not found in CSV")
+                track_id = processing.get_track_id(song_name, artist_name)
+                song_features = processing.get_song_features(track_id)
+                cluster_number = processing.get_cluster(song_name, artist_name)
+                emotion = classification.classification.run_lyric_analysis(song_name, artist_name)
+                predicted_genre = predict_genre(song_name, artist_name)
+                album_genre = get_album_genre(song_name, artist_name)
+
+                update_csv(song_name, artist_name, track_id, song_features, cluster_number, emotion, predicted_genre, album_genre)
+
+            if emotion and song_emotion:
+                emotion, song_emotion = emotion.lower(), song_emotion.lower()
+            if predicted_genre and song_predicted_genre:
+                predicted_genre, song_predicted_genre = predicted_genre.lower(), song_predicted_genre.lower()
+            if album_genre and song_album_genre:
+                album_genre, song_album_genre = album_genre.lower(), song_album_genre.lower()
+
+            similar_predicted_genre = False
+            similar_song_emotion = False
+            similar_album_genre = False
+            similar_genre_1 = False
+            similar_genre_2 = False
+
+            if predicted_genre and song_predicted_genre:
+                similar_predicted_genre = (predicted_genre == song_predicted_genre)
+            if album_genre and song_album_genre:
+                similar_album_genre = (album_genre == song_album_genre)
+            if predicted_genre and song_album_genre:
+                similar_genre_1 = (predicted_genre == song_album_genre)
+            if album_genre and song_predicted_genre:
+                similar_genre_2 = (album_genre == song_predicted_genre)
+
+            if emotion and song_emotion:
+                distance = processing.emotional_similarity[emotion][song_emotion]
+                if distance >= 6:
+                    similar_song_emotion = True
+
+            if (similar_predicted_genre or similar_album_genre or similar_genre_1 or similar_genre_2) and similar_song_emotion:
+                similar_songs.append("spotify:track:" + track_id)
+                print(song_name + " by " + artist_name + " added")
+
+    return similar_songs
 
 
 def update_csv(song_name, artist_name, track_id, song_features, cluster_number, emotion, predicted_genre, album_genre):
@@ -91,4 +148,4 @@ def update_csv(song_name, artist_name, track_id, song_features, cluster_number, 
         print(f"Song already in CSV: {song_name} by {artist_name}")
 
 
-process_song("Welcome to Paradise", "Green Day")
+process_song("Centuries", "Fall Out Boy")
