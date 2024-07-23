@@ -4,7 +4,8 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-                'sans': ['Noto Sans', 'sans-serif'] 
+                'sans': ['Noto Sans', 'sans-serif'],
+                'app': ['Figtree', 'sans-serif'], 
              },
             colors: {
                 'dark-bg': '#191716',
