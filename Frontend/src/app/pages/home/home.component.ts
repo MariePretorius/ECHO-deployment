@@ -11,12 +11,15 @@ import { SpotifyService } from "../../services/spotify.service";
 import { ScreenSizeService } from '../../services/screen-size-service.service';
 import { SearchBarComponent } from '../../shared/search-bar/search-bar.component';
 import {SearchComponent} from '../../pages/search/search.component';
+import { PageHeaderComponent } from '../../shared/page-header/page-header.component';
+
 @Component({
     selector: 'app-home',
     standalone: true,
     imports: [
         SongRecommendationComponent,
         NavbarComponent,
+        PageHeaderComponent,
         NgClass,
         NgForOf,
         NgIf,

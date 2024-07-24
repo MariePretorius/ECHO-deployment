@@ -18,6 +18,7 @@ import { BottomNavComponent } from '../../shared/bottom-nav/bottom-nav.component
 import { SpotifyService } from "../../services/spotify.service";
 import { ProviderService } from "../../services/provider.service";
 import { TopCardComponent } from '../../shared/top-card/top-card.component';
+import { PageHeaderComponent } from '../../shared/page-header/page-header.component';
 
 @Component({
     selector: 'app-profile',
@@ -36,7 +37,8 @@ import { TopCardComponent } from '../../shared/top-card/top-card.component';
         CommonModule,
         BottomNavComponent,
         TopCardComponent,
-        SideBarComponent
+        SideBarComponent,
+        PageHeaderComponent
     ],
     templateUrl: './profile.component.html',
     styleUrl: './profile.component.css',

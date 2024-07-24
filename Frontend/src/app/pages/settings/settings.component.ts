@@ -9,6 +9,7 @@ import { AudioComponent } from '../../shared/setting-pages/audio/audio.component
 import { DisplayComponent } from '../../shared/setting-pages/display/display.component';
 import { LanguageComponent } from '../../shared/setting-pages/language/language.component';
 import { PrivacyComponent } from '../../shared/setting-pages/privacy/privacy.component';
+import { PageHeaderComponent } from '../../shared/page-header/page-header.component';
 
 @Component({
   selector: 'app-settings',
@@ -21,6 +22,7 @@ import { PrivacyComponent } from '../../shared/setting-pages/privacy/privacy.com
     DisplayComponent,
     LanguageComponent,
     PrivacyComponent,
+    PageHeaderComponent
   ],
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.css'

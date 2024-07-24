@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import { SpotifyService } from "../../services/spotify.service";
 import { ScreenSizeService } from '../../services/screen-size-service.service';
 import { OnInit } from '@angular/core';
+import { PageHeaderComponent } from '../../shared/page-header/page-header.component';
 
 @Component({
   selector: 'app-user-library',
@@ -29,6 +30,7 @@ import { OnInit } from '@angular/core';
         MoodsComponent,
         BottomNavComponent,
         SearchBarComponent,
+        PageHeaderComponent
    ],
   templateUrl: './user-library.component.html',
   styleUrl: './user-library.component.css'
