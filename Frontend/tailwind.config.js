@@ -5,7 +5,7 @@ module.exports = {
         extend: {
             fontFamily: {
                 'sans': ['Noto Sans', 'sans-serif'],
-                'app': ['Figtree', 'sans-serif'], 
+                'app': ['Poppins', 'sans-serif'], 
              },
             colors: {
                 'dark-bg': '#191716',
