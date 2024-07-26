@@ -44,6 +44,20 @@ emotional_similarity = {
 }
 
 
+def map_deezer_genre_to_model_genre(deezer_genre):
+    mapping = {
+        'Blues': 'blues',
+        'Classical': 'classical',
+        'Rap/Hip Hop': 'hip-hop',
+        'Jazz': 'jazz',
+        'Metal': 'metal',
+        'Pop': 'pop',
+        'Reggae': 'reggae',
+        'Rock': 'rock'
+    }
+    return mapping.get(deezer_genre, deezer_genre)
+
+
 def get_song_features(track_id):
     try:
         features = sp.audio_features(track_id)
