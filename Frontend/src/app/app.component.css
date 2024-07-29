@@ -1,1 +1,14 @@
-/* @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap'); */
+.page-header {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: 'Poppins', sans-serif;
+  position: fixed;
+  top: 0;
+  left: 45vw;
+  z-index: 1000;
+}
+
+.font-app {
+  padding-top: 60px;
+}

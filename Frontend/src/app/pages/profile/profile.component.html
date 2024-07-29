@@ -34,7 +34,6 @@
 </div>
 
 <div *ngIf="screenSize === 'desktop'" class="desktop-layout bg-gray-background">
-  <app-page-header [pageTitle]="'Profile'"></app-page-header>
   <div class="min-h-screen dark:bg-desktop-bg bg-gray-verylight flex flex-col justify-center px-6 py-12 lg:px-8">
     <div class="flex justify-center items-center">
       <div class="fixed top-1 right-12 flex flex-col items-center">
@@ -89,7 +88,7 @@
       <div class="navbar-container">
         <app-navbar (selectedNavChange)="onNavChange($event)"></app-navbar>
       </div>
-      
+
     </div>
   </div>
 </div>

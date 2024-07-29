@@ -1,5 +1,4 @@
 <div class="min-h-screen dark:bg-desktop-bg bg-gray-verylight grid grid-cols-5 grid-rows-6 gap-4 px-6 py-3 lg:px-8" style="overflow: auto;">
-  <app-page-header [pageTitle]="'Home'"></app-page-header>
   <div class="col-start-1 col-span-5 row-start-1">
     <div class="fixed navbar-container pt-[1vh] pl-5">
         <app-navbar (selectedNavChange)="onNavChange($event) "></app-navbar>
@@ -33,14 +32,14 @@
         <app-moods></app-moods>
       </div>
     </ng-container>
-  
+
     <!-- Mobile Layout -->
     <ng-container *ngSwitchCase="'mobile'">
       <app-moods class="col-start-1 col-span-12 row-start-1 row-span-10 pt-[8.5vh]"></app-moods>
       <app-side-bar class="col-start-1 col-span-12 row-start-2 row-span-9"></app-side-bar>
     </ng-container>
   </ng-container>
-  
+
   <!-- Common Components Across Screen Sizes -->
   <div *ngIf="title === 'Search'" class="col-start-2 col-span-4 row-start-1 row-span-5 pl-16 pt-16 mr-5">
     <app-search [searchQuery]="searchQuery"></app-search>
