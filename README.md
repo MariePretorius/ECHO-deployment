@@ -79,7 +79,7 @@
     <tr>
       <td><img src="./readme/images/marie.jpg" width="80" height="80" alt="Marie Pretorius"></td>
       <td>Marie Pretorius</td>
-      <td>Technical Lead</td>
+      <td>AI Engineer</td>
       <td>
         <a href="https://github.com/MariePretorius">
           <img src="https://img.shields.io/badge/GitHub-Profile-blue?style=flat-square&logo=github" alt="GitHub">
@@ -95,7 +95,7 @@
     <tr>
       <td><img src="./readme/images/tristan.jpg" width="80" height="80" alt="Tristan Potgieter"></td>
       <td>Tristan Potgieter</td>
-      <td>Integration Engineer</td>
+      <td>Testing Engineer</td>
       <td>
         <a href="https://github.com/Divergent-Caesar">
           <img src="https://img.shields.io/badge/GitHub-Profile-blue?style=flat-square&logo=github" alt="GitHub">
@@ -111,7 +111,7 @@
     <tr>
       <td><img src="./readme/images/douglas.jpg" width="80" height="80" alt="Douglas Porter"></td>
       <td>Douglas Porter</td>
-      <td>Backend Engineer</td>
+      <td>Technical Lead (Fullstack)</td>
       <td>
         <a href="https://github.com/Douglasj02">
           <img src="https://img.shields.io/badge/GitHub-Profile-blue?style=flat-square&logo=github" alt="GitHub">
