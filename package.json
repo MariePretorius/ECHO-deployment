@@ -7,6 +7,9 @@
     "start:frontend": "cd Frontend && npm start",
     "install": "cd Backend && npm install && cd ../Frontend && npm install"
   },
+  "engines": {
+    "node": "20.15.1"
+  },
   "dependencies": {
     "concurrently": "^8.2.2"
   },
