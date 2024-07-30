@@ -4,8 +4,16 @@
 
 azure-functions
 azure-storage-blob
-numpy
-pandas
 scikit-learn
 pickle-mixin
 spotipy
+transformers
+bs4
+pydub
+librosa
+numpy
+pandas
+requests
+torch==2.4.0
+torchvision==0.19.0
+-f https://download.pytorch.org/whl/cpu
