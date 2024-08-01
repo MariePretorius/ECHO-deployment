@@ -14,6 +14,7 @@ export const routes: Routes = [
   { path: "landing", component: LandingPageComponent },
   { path: "login", component: LoginComponent },
   { path: "register", component: RegisterComponent },
+  { path: "/home", redirectTo: "/home", pathMatch: "prefix"},
   { path: "home", component: HomeComponent },
   { path: "profile", component: ProfileComponent },
   { path: "auth/callback", component: AuthCallbackComponent },
