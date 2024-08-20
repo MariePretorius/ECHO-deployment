@@ -6,11 +6,10 @@ import * as crypto from "crypto";
 
 @Injectable()
 export class SupabaseService {
-    private encryptionKey: Buffer;
 
-    constructor() {
-        this.encryptionKey = Buffer.from(encryptionKey, "base64");
-    }
+    constructor() {}
+
+    private encryptionKey = process.env.SECRET_ENCRYPTION_KEY;
 
     // This method is used to sign in with OAuth.using the given provider.
     async signinWithOAuth(providerName: string) {
@@ -104,6 +103,8 @@ export class SupabaseService {
         encrypted += cipher.final("base64");
         return `${iv.toString("base64")}:${encrypted}`;
     }
+
+    private iv = 'your_fixed_initialization_vector_here';
 
     // This method is used to decrypt a token.
     decryptToken(encryptedToken: string): string {
