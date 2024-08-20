@@ -63,4 +63,4 @@ jobs:
         with:
           app-name: 'echo-backend-webapp'
           slot-name: 'Production'
-          package: .
+          package: ./Backend
