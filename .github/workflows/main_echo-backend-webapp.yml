@@ -15,18 +15,26 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '20.x'
-      - name: npm install, build, and test
+      - name: Install dependencies
+        working-directory: ./Backend
         run: |
-          npm install
-          npm run build --if-present
-          npm run test --if-present
+          npm ci
+      - name: Build
+        working-directory: ./Backend
+        run: |
+          npm run build
+      - name: Test
+        working-directory: ./Backend
+        run: |
+          npm run test
       - name: Zip artifact for deployment
-        run: zip release.zip ./Backend/* -r
+        working-directory: ./Backend
+        run: zip -r release.zip .
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: release.zip
+          path: Backend/release.zip
   deploy:
     runs-on: ubuntu-latest
     needs: build
@@ -55,4 +63,4 @@ jobs:
         with:
           app-name: 'echo-backend-webapp'
           slot-name: 'Production'
-          package: ./Backend
+          package: .
