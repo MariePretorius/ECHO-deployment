@@ -37,10 +37,8 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "aot": true,
-              "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
               "serviceWorker": true,
@@ -49,10 +47,8 @@
             "development": {
               "optimization": false,
               "sourceMap": true,
-              "extractCss": false,
               "namedChunks": true,
               "aot": false,
-              "extractLicenses": false,
               "vendorChunk": true,
               "buildOptimizer": false
             }
@@ -64,9 +60,7 @@
           "options": {
             "browserTarget": "Frontend:build:production",
             "serverTarget": "Frontend:server:production",
-            "routes": [
-              "/"
-            ]
+            "routes": ["/"]
           }
         },
         "server": {
