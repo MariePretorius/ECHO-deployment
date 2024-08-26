@@ -43,7 +43,7 @@ jobs:
           skip_deploy_on_missing_secrets: true
           app_location: "./Frontend"
           api_location: "./AIFunctionApp"
-          output_location: "dist/frontend"
+          output_location: "dist/frontend/browser"
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
